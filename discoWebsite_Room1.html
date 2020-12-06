@@ -1,0 +1,117 @@
+<!-- https://bensonruan.com/how-to-access-webcam-and-take-photo-with-javascript/# -->
+
+<html>
+  <body>
+    <section class="section">
+      <div class="container">
+        <div class="columns">
+          <h1 class="title">Room 1</h1>
+          <video autoplay id="video"></video>
+          <div class="column is-four-fifths">
+            <button class="button is-hidden" id="btnPlay">
+              <span class="icon is-small">
+                <i class="fas fa-play"></i>
+              </span>
+              <span> play </span>
+            </button>
+            <button class="button" id="btnPause">
+              <span class="icon">
+                <i class="fas fa-pause"></i>
+              </span>
+              <span>Pause</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <input type="submit" value="Back" id="back_to_lobby"
+    onclick="window.location.href='./discoWebsite_Lobby.html'""/>
+
+    <script>
+      (function () {
+        if (
+          !"mediaDevices" in navigator ||
+          !"getUserMedia" in navigator.mediaDevices
+        ) {
+          alert("Camera API is not available in your browser");
+          return;
+        }
+
+        // get page elements
+        const video = document.querySelector("#video");
+        const btnPlay = document.querySelector("#btnPlay");
+        const btnPause = document.querySelector("#btnPause");
+        const btnScreenshot = document.querySelector("#btnScreenshot");
+        const btnChangeCamera = document.querySelector("#btnChangeCamera");
+        const screenshotsContainer = document.querySelector("#screenshots");
+        const canvas = document.querySelector("#canvas");
+        const devicesSelect = document.querySelector("#devicesSelect");
+
+        // video constraints
+        const constraints = {
+          video: {
+            width: {
+              min: 800,
+              ideal: 800, //1920
+              max: 2560,
+            },
+            height: {
+              min: 600,
+              ideal: 600, //1080
+              max: 1440,
+            },
+          },
+        };
+
+        // use front face camera
+        let useFrontCamera = true;
+
+        // current video stream
+        let videoStream;
+
+        // handle events
+        // play
+        btnPlay.addEventListener("click", function () {
+          video.play();
+          btnPlay.classList.add("is-hidden");
+          btnPause.classList.remove("is-hidden");
+        });
+
+        // pause
+        btnPause.addEventListener("click", function () {
+          video.pause();
+          btnPause.classList.add("is-hidden");
+          btnPlay.classList.remove("is-hidden");
+        });
+
+        // stop video stream
+        function stopVideoStream() {
+          if (videoStream) {
+            videoStream.getTracks().forEach((track) => {
+              track.stop();
+            });
+          }
+        }
+
+        // initialize
+        async function initializeCamera() {
+          stopVideoStream();
+          constraints.video.facingMode = useFrontCamera
+            ? "user"
+            : "environment";
+
+          try {
+            videoStream = await navigator.mediaDevices.getUserMedia(
+              constraints
+            );
+            video.srcObject = videoStream;
+          } catch (err) {
+            alert("Could not access the camera");
+          }
+        }
+
+        initializeCamera();
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title>DiscoApp</title>
+    <style>
+      #displayroom {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-top: 10%;
+      }
+      #displayroom_button {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+      }
+      #logout {
+        margin: 10%;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="text-align: center">
+      <h1>DiscoWeb Lobby</h1>
+      <div class="flex-container" id="displayroom">
+        <img src="./bilder/150.png" width="300" height="300" />
+
+        <img src="./bilder/150.png" width="300" height="300" />
+      </div>
+      <div class="flex-container" id="displayroom_button">
+        <div>
+          <p>Room 1</p>
+          <input
+            type="submit"
+            value="enter"
+            onclick="window.location.href='./discoWebsite_Room1.html'"
+          />
+        </div>
+        <div>
+          <p>Room 2</p>
+          <input type="submit" value="enter" />
+        </div>
+      </div>
+      <input type="submit" value="Logout" id="Logout"
+      onclick="window.location.href='./discoWebsite_Login.html'""/>
+    </div>
+  </body>
+</html>
