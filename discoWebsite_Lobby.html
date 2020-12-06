@@ -37,11 +37,16 @@
         </div>
         <div>
           <p>Room 2</p>
-          <input type="submit" value="enter" />
+          <input type="submit" value="enter" onclick="StillWorkingOn" />
         </div>
       </div>
       <input type="submit" value="Logout" id="Logout"
       onclick="window.location.href='./index.html'""/>
     </div>
+    <script>
+      function StillWorkingOn() {
+        var person = prompt("is not ready");
+      }
+    </script>
   </body>
 </html>
